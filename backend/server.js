@@ -9,12 +9,13 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({
-    origin: "http://localhost:5173", // your React app URL
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL, // your React app URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-  }));
-
+  })
+);
 
 app.use(express.json());
 
@@ -28,10 +29,10 @@ const MONGO_URI = process.env.MONGO_URI;
 
 // Connect DB and start server
 connectDB(MONGO_URI)
-	.then(() => {
-		app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-	})
-	.catch((error) => {
-		console.error("Failed to start server:", error.message);
-		process.exit(1);
-	});
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  })
+  .catch((error) => {
+    console.error("Failed to start server:", error.message);
+    process.exit(1);
+  });
