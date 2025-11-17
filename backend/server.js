@@ -28,11 +28,11 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Connect DB and start server
-connectDB(MONGO_URI)
-  .then(() => {
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-  })
-  .catch((error) => {
-    console.error("Failed to start server:", error.message);
-    process.exit(1);
-  });
+try {
+  await connectDB(MONGO_URI);
+} catch (error) {
+  console.error("Failed to connect to the database:", error);
+  process.exit(1);
+}
+
+export default app;
